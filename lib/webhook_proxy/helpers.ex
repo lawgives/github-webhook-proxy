@@ -3,7 +3,7 @@ defmodule WebhookProxy.Helpers do
 
   def post_to_proxy_url(repository_url) do
     Logger.debug(["Proxying to: ", inspect(Application.get_env(:webhook_proxy, :proxy_url))])
-    case HTTPoison.post Application.get_env(:webhook_proxy, :proxy_url), "repository_url="<>repository_url, %{"Content-Type" => "application/x-www-form-urlencoded"} do
+    case HTTPoison.post Application.get_env(:webhook_proxy, :proxy_url), ["repository_url=", repository_url], %{"Content-Type" => "application/x-www-form-urlencoded"} do
       {:ok, %HTTPoison.Response{status_code: 200, body: _}} ->
         {:ok, 200, "OK"}
       {:ok, %HTTPoison.Response{status_code: 201, body: _}} ->
