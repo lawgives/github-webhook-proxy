@@ -19,7 +19,7 @@ defmodule WebhookProxy.Router do
   scope "/", WebhookProxy do
     pipe_through :webhook
 
-    get "/webhook", WebhookProxy.WebhookController, :webhook
+    get "/webhook", WebhookController, :webhook
   end
 
 
