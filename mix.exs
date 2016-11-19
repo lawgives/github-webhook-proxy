@@ -21,7 +21,7 @@ defmodule WebhookProxy.Mixfile do
     #  applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext]]
     # However, we do not need phoenix_pubsub or phoenix_html, removing.
     [mod: {WebhookProxy, []},
-     applications: [:phoenix, :cowboy, :logger, :gettext]]
+     applications: [:phoenix, :cowboy, :httpoison, :logger, :gettext]]
   end
 
   # Specifies which paths to compile per environment.
@@ -39,6 +39,8 @@ defmodule WebhookProxy.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
-     {:basic_auth, "~> 2.0.0"}]
+     {:basic_auth, "~> 2.0.0"},
+     {:httpoison, "~> 0.10.0"}
+    ]
   end
 end
