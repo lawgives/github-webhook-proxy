@@ -7,7 +7,7 @@ defmodule WebhookProxy.WebhookController do
   def webhook(conn, %{"repository_url" => repository_url}) do
     # Proxy with the real credentials
     IO.inspect Application.get_env(:webhook_proxy, :proxy_url)
-    case HTTPoison.post Application.get_env(:webhook_proxy, :proxy_url), "repository_url="<>repository_url, %{} do
+    case HTTPoison.post Application.get_env(:webhook_proxy, :proxy_url), "repository_url="<>repository_url, %{"Content-Type" => "application/x-www-form-urlencoded"} do
       {:ok, %HTTPoison.Response{status_code: 200, body: _}} ->
         conn
         |> send_resp(200, "OK")
