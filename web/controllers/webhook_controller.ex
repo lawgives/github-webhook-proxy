@@ -1,30 +1,13 @@
 defmodule WebhookProxy.WebhookController do
   use WebhookProxy.Web, :controller
-  require Logger
 
-  # Test this for now, use env variables later
   plug BasicAuth, use_config: { :basic_auth, :webhook }
 
   def webhook(conn, %{"repository_url" => repository_url}) do
     # Proxy with the real credentials
-    Logger.debug(["Proxying to: ", inspect(Application.get_env(:webhook_proxy, :proxy_url))])
-    case HTTPoison.post Application.get_env(:webhook_proxy, :proxy_url), "repository_url="<>repository_url, %{"Content-Type" => "application/x-www-form-urlencoded"} do
-      {:ok, %HTTPoison.Response{status_code: 200, body: _}} ->
-        conn
-        |> send_resp(200, "OK")
-      {:ok, %HTTPoison.Response{status_code: 201, body: _}} ->
-        conn
-        |> send_resp(200, "OK")
-      {:ok, %HTTPoison.Response{status_code: code, body: body}} ->
-        IO.puts ["Error when proxying. code=", code, " body=", body]
-        conn
-        |> send_resp(500, "Error")
-      {:error, %HTTPoison.Error{reason: reason}} ->
-        IO.puts "Error when proxying. reason:"
-        IO.inspect(reason)
-        conn
-        |> send_resp(500, "Error")
-    end
+    {:ok, status, message} = WebhookProxy.Helpers.post_to_proxy_url(repository_url)
+    conn
+    |> send_resp(status, message)
   end
 
   def webhook(conn, _params) do
