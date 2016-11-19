@@ -1,6 +1,9 @@
 defmodule WebhookProxy.Router do
   use WebhookProxy.Web, :router
 
+  pipeline :webhook do
+  end
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -14,10 +17,11 @@ defmodule WebhookProxy.Router do
   end
 
   scope "/", WebhookProxy do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :webhook
 
-    get "/", PageController, :index
+    get "/webhook", WebhookProxy.WebhookController, :webhook
   end
+
 
   # Other scopes may use custom stacks.
   # scope "/api", WebhookProxy do
