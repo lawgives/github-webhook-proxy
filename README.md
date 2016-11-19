@@ -48,6 +48,21 @@ only available in dev mode.
 
 TODO: Get this built on Docker so people using this will not have to install Erlang or Elixir.
 
+### TODO
+
+Some things to think about for the future:
+
+  1. Github will generate an HMAC signature based on a secret
+  2. Maybe instead of passing in basic auth, we associate a unique token with secret
+  3. Maybe validate that the token belongs to a particular repo
+
+Since this is proxying the real commands, I don't think there is too much security risk. If someone
+gets a hold of the basic auth credentials, at best they can force go-server to make download requests
+from Github. This may result in a DOS attack.
+
+As such, it would be nice to be able to dynamically generate new tokens and secrets while revoking
+old ones. But then we would also have to think about where to store that.
+
 ## Phoenix Instructions
 To start your Phoenix app:
 
