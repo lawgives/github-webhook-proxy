@@ -1,5 +1,53 @@
 # WebhookProxy
 
+## Overview
+[Go CD](https://go.cd) is built to to poll SCMs such as Github.com. If you wanted to use their
+notification API, then we need:
+
+  1. A go.cd user that has admin credentials
+  2. Somehow convert the incoming Github webhook from a JSON POST to a CGI POST
+
+Since we do not want to expose admin credentials outside, we need to convert something like a
+randomized token into the correct credentials. We can do this by using a proxy that accepts
+some sort of authentication and then sends the request with the real credentials to Go.cd
+
+See:
+  * https://github.com/gocd/gocd/issues/217
+  * https://github.com/gocd/gocd/issues/1591
+  * https://docs.go.cd/15.1.0/api/materials_api.html#git
+  * https://developer.github.com/v3/activity/events/types/#pushevent
+
+### Configuration
+
+Set these environmental variables:
+
+  * `WEBHOOK_PROXY_URL` should be something like `http://admin:pass@gocd-server:8153/go/api/material/notify/git`
+  * `WEBHOOK_USERNAME` randomly generate something, such as `dkaDadkwjKjdfk`
+  * `WEBHOOK_PASSWORD` randomly generate something, such as `kdj2k9d23Dkdaf`
+
+When setting up the webhook on Github, populate for the values `WEBHOOK_USERNAME` and `WEBHOOK_PASSWORD`, such as:
+
+```
+https://WEBHOOK_USERNAME:WEBHOOK_PASSWORD@gocd.example.com/webhook
+```
+
+This proxy responds to the `webhook` endpoint. You should map it from the reverse proxy handling the SSL.
+
+#### NEW endpoint
+
+  * `/webhook` will accept a GET request with `repository_url=` and converts it to a POST GoCD
+  * `/webhooks/github` will accept a JSON POST request and convert the PushEvent type into a POST on GoCD
+
+#### Dev Endpoint
+
+`/webhook_test` will pretend to be Go CD and accept a urlencoded POST request with `repository_url`. This is
+only available in dev mode.
+
+### Docker
+
+TODO: Get this built on Docker so people using this will not have to install Erlang or Elixir.
+
+## Phoenix Instructions
 To start your Phoenix app:
 
   * Install dependencies with `mix deps.get`
@@ -16,3 +64,4 @@ Ready to run in production? Please [check our deployment guides](http://www.phoe
   * Docs: https://hexdocs.pm/phoenix
   * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
+
