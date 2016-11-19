@@ -6,7 +6,8 @@ defmodule WebhookProxy.WebhookController do
 
   def webhook(conn, %{"repository_url" => repository_url}) do
     # Proxy with the real credentials
-    case HTTPoison.post "http://username:password@localhost/basic_auth", "repository_url="<>repository_url, %{} do
+    IO.inspect Application.get_env(:webhook_proxy, :proxy_url)
+    case HTTPoison.post Application.get_env(:webhook_proxy, :proxy_url), "repository_url="<>repository_url, %{} do
       {:ok, %HTTPoison.Response{status_code: 200, body: _}} ->
         conn
         |> send_resp(200, "OK")
@@ -23,9 +24,6 @@ defmodule WebhookProxy.WebhookController do
         conn
         |> send_resp(500, "Error")
     end
-
-    conn
-    |> send_resp(200, "OK")
   end
 
   def webhook(conn, _params) do

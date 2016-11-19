@@ -20,6 +20,11 @@ defmodule WebhookProxy.Router do
     pipe_through :webhook
 
     get "/webhook", WebhookController, :webhook
+
+    # Make a test endpoint available for dev
+    if Mix.env == :dev do
+      post "/webhook_test", WebhookTestController, :test_ok
+    end
   end
 
 
