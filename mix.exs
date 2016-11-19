@@ -16,8 +16,12 @@ defmodule WebhookProxy.Mixfile do
   #
   # Type `mix help compile.app` for more information.
   def application do
+    # Original:
+    # [mod: {WebhookProxy, []},
+    #  applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext]]
+    # However, we do not need phoenix_pubsub or phoenix_html, removing.
     [mod: {WebhookProxy, []},
-     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext]]
+     applications: [:phoenix, :cowboy, :logger, :gettext]]
   end
 
   # Specifies which paths to compile per environment.
@@ -29,8 +33,9 @@ defmodule WebhookProxy.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [{:phoenix, "~> 1.2.1"},
-     {:phoenix_pubsub, "~> 1.0"},
-     {:phoenix_html, "~> 2.6"},
+     # Do not need these for our proxy
+     # {:phoenix_pubsub, "~> 1.0"},
+     # {:phoenix_html, "~> 2.6"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
