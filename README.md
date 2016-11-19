@@ -33,10 +33,11 @@ https://WEBHOOK_USERNAME:WEBHOOK_PASSWORD@gocd.example.com/webhook
 
 This proxy responds to the `webhook` endpoint. You should map it from the reverse proxy handling the SSL.
 
-#### NEW endpoint
+#### Endpoints
 
-  * `/webhook` will accept a GET request with `repository_url=` and converts it to a POST GoCD
-  * `/webhooks/github` will accept a JSON POST request and convert the PushEvent type into a POST on GoCD
+  * GET  `/webhook` will accept a GET request with `repository_url=` query param and converts it to a POST GoCD
+  * POST `/webhooks/github/git` will accept a JSON POST request and convert the PushEvent payload into a POST on GoCD with (public) git url
+  * POST `/webhooks/github/ssh` will accept a JSON POST request and convert the PushEvent payload into a POST on GoCD with (public) ssh url
 
 #### Dev Endpoint
 

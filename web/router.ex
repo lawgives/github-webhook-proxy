@@ -20,6 +20,8 @@ defmodule WebhookProxy.Router do
     pipe_through :webhook
 
     get "/webhook", WebhookController, :webhook
+    post "/webhooks/github/git", Webhooks.GithubController, :webhook_for_git_url
+    post "/webhooks/github/ssh", Webhooks.GithubController, :webhook_for_ssh_url
 
     # Make a test endpoint available for dev
     if Mix.env == :dev do
