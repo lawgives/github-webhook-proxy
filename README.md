@@ -28,20 +28,20 @@ Set these environmental variables:
 When setting up the webhook on Github, populate for the values `WEBHOOK_USERNAME` and `WEBHOOK_PASSWORD`, such as:
 
 ```
-https://WEBHOOK_USERNAME:WEBHOOK_PASSWORD@gocd.example.com/webhook
+https://WEBHOOK_USERNAME:WEBHOOK_PASSWORD@gocd.example.com/webhooks/github/ssh
 ```
 
-This proxy responds to the `webhook` endpoint. You should map it from the reverse proxy handling the SSL.
+This proxy responds to the `webhooks/` endpoints. You should map it from the reverse proxy handling the SSL.
 
 #### Endpoints
 
-  * GET  `/webhook` will accept a GET request with `repository_url=` query param and converts it to a POST GoCD
-  * POST `/webhooks/github/git` will accept a JSON POST request and convert the PushEvent payload into a POST on GoCD with (public) git url
-  * POST `/webhooks/github/ssh` will accept a JSON POST request and convert the PushEvent payload into a POST on GoCD with (public) ssh url
+  * GET  `/webhooks/generic` will accept a `repository_url=` query param and POST to GoCD
+  * POST `/webhooks/github/git` will accept a Github PushEvent payload into a POST to GoCD with (public) git url
+  * POST `/webhooks/github/ssh` will accept a Github PushEvent payload into a POST to GoCD with (public) ssh url
 
 #### Dev Endpoint
 
-`/webhook_test` will pretend to be Go CD and accept a urlencoded POST request with `repository_url`. This is
+`/webhooks/test` will pretend to be Go CD and accept a urlencoded POST request with `repository_url`. This is
 only available in dev mode.
 
 ### Docker

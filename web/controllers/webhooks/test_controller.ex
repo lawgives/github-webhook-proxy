@@ -1,4 +1,4 @@
-defmodule WebhookProxy.WebhookTestController do
+defmodule WebhookProxy.Webhooks.TestController do
   use WebhookProxy.Web, :controller
 
   # Test this for now, use env variables later

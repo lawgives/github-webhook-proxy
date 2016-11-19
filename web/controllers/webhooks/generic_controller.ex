@@ -1,4 +1,4 @@
-defmodule WebhookProxy.WebhookController do
+defmodule WebhookProxy.Webhooks.GenericController do
   use WebhookProxy.Web, :controller
 
   plug BasicAuth, use_config: { :basic_auth, :webhook }
