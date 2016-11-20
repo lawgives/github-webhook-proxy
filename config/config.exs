@@ -13,7 +13,8 @@ config :webhook_proxy, WebhookProxy.Endpoint,
   # pubsub: [name: WebhookProxy.PubSub,
   #         adapter: Phoenix.PubSub.PG2]
 
-config :webhook_proxy, proxy_url: System.get_env("WEBHOOK_PROXY_URL") || IO.puts("[warn] WEBHOOK_PROXY_URL environmental variable required")
+# For whatever reason, when we turn this into a release, we get an :ok for this value
+# config :webhook_proxy, proxy_url: System.get_env("WEBHOOK_PROXY_URL") || IO.puts("[warn] WEBHOOK_PROXY_URL environmental variable required")
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -25,6 +26,7 @@ config :basic_auth, webhook: [
   username: {:system, "WEBHOOK_USERNAME"},
   password: {:system, "WEBHOOK_PASSWORD"},
   realm:    "webhook",
+  proxy_url: System.get_env("WEBHOOK_PROXY_URL") || IO.puts("[warn] WEBHOOK_PROXY_URL environmental variable required")
 ]
 
 config :basic_auth, webhook_test: [
