@@ -32,7 +32,6 @@ rel_builder=docker run --rm -ti \
 	-v $(mix_dir):/home/app/.mix \
 	-v $(rebar3_dir):/home/app/.cache/rebar3 \
 	-w /build \
-	-e DEBUG=1 \
 	-e MIX_ENV=prod \
 	$(elixir_image)
 
@@ -54,8 +53,6 @@ $(prod_build): $(mix_dir) deps
 
 deps: $(mix_dir)
 	$(rel_builder) mix deps.get
-	$(rel_builder) mix deps.update erlware_commons
-	$(rel_builder) mix deps.compile
 
 push:
 	docker push $(user)/$(app):$(version)
@@ -88,11 +85,13 @@ $(cache_dir):
 
 clean: clean-rel
 
-clean-all: clean-rel clean-deps clean-docker-deps
+clean-all: clean-rel clean-deps clean-cache clean-docker-deps
 
 clean-rel: clean-deps clean-cache
 	rm -fr $(prod_build)
 	rm -fr rel
+
+clean-dist: clean-rel clean-cache
 
 clean-docker-deps:
 	rm -fr $(docker_deps_dir)
