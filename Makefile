@@ -39,9 +39,8 @@ prod_build=_build/prod
 
 all: docker-image
 
-docker-image: $(docker_deps_dir)/bin/dinit
-	echo "Building release: ${VERSION}"
-	# docker build --tag=$(user)/$(app):$(version) .
+docker-image: $(docker_deps_dir)/bin/dinit rel
+	docker build --tag=$(user)/$(app):$(version) .
 
 rel: compile
 	$(rel_builder) mix release
