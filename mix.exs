@@ -39,8 +39,9 @@ defmodule WebhookProxy.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
-     {:basic_auth, "~> 2.0.0"},
-     {:httpoison, "~> 0.10.0"}
+     {:basic_auth, "~> 2.0.0"}, # Simple HTTP basic auth plug
+     {:httpoison, "~> 0.10.0"}, # HTTP client backed by hackney (streaming binary) and Poison (fast JSON)
+     {:exrm, "~> 1.0.0"} # Elixir Release Manager. When Distillery comes out of beta, switch to that
     ]
   end
 end

@@ -13,7 +13,7 @@ config :webhook_proxy, WebhookProxy.Endpoint,
   pubsub: [name: WebhookProxy.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
-config :webhook_proxy, proxy_url: System.get_env("WEBHOOK_PROXY_URL") || (IO.puts("WEBHOOK_PROXY_URL environmental variable required") && System.halt(1))
+config :webhook_proxy, proxy_url: System.get_env("WEBHOOK_PROXY_URL") || IO.puts("[warn] WEBHOOK_PROXY_URL environmental variable required")
 
 # Configures Elixir's Logger
 config :logger, :console,
