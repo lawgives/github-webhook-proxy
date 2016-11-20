@@ -10,6 +10,9 @@ defmodule WebhookProxy.Helpers do
         {:ok, 200, "OK"}
       {:ok, %HTTPoison.Response{status_code: 201, body: _}} ->
         {:ok, 200, "OK"}
+      {:ok, %HTTPoison.Response{status_code: 202, body: _}} ->
+        # gocd returns 202 Accepted for some reason
+        {:ok, 200, "OK"}
       {:ok, %HTTPoison.Response{status_code: code, body: body}} ->
         IO.puts ["Error when proxying. code=", Integer.to_string(code), " body=", body]
         {:ok, 500, "Error"}

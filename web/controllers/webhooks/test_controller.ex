@@ -7,7 +7,7 @@ defmodule WebhookProxy.Webhooks.TestController do
 
   def test_ok(conn, %{"repository_url" => repository_url}) do
     conn
-    |> send_resp(200, "OK " <> repository_url)
+    |> send_resp(202, ["The material is now scheduled for an update. Please check relevant pipeline(s) for status. ", repository_url])
   end
 
   def test_ok(conn, _params) do
