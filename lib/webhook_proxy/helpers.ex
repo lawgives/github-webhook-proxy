@@ -11,7 +11,7 @@ defmodule WebhookProxy.Helpers do
       {:ok, %HTTPoison.Response{status_code: 201, body: _}} ->
         {:ok, 200, "OK"}
       {:ok, %HTTPoison.Response{status_code: code, body: body}} ->
-        IO.puts ["Error when proxying. code=", code, " body=", body]
+        IO.puts ["Error when proxying. code=", Integer.to_string(code), " body=", body]
         {:ok, 500, "Error"}
       {:error, %HTTPoison.Error{reason: reason}} ->
         IO.puts "Error when proxying. reason:"
