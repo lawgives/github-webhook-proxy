@@ -1,0 +1,2 @@
+#!/bin/sh
+su-exec app ${APP_HOME}/bin/${APP_NAME} foreground

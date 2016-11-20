@@ -5,6 +5,14 @@ ENV APP_VERSION "0.1.0"
 ENV PORT 4000
 ENV APP_HOME /home/app/${APP_NAME}
 
+# Add dinit https://github.com/miekg/dinit (Compiled via Makefile)
+ADD _build/docker-deps/bin/dinit /sbin/dinit
+
+# su-exec
+RUN apk --no-cache add su-exec
+
+ADD docker/etc/rc.local /etc/rc.local
+
 RUN mkdir -p $APP_HOME
 
 # Do we need erts here?
@@ -19,6 +27,8 @@ ADD rel/$APP_NAME/releases/$APP_VERSION/start.boot        $APP_HOME/releases/$AP
 ADD rel/$APP_NAME/releases/$APP_VERSION/sys.config        $APP_HOME/releases/$APP_VERSION/sys.config
 ADD rel/$APP_NAME/releases/$APP_VERSION/vm.args           $APP_HOME/releases/$APP_VERSION/vm.args
 
+RUN chown -R app ${APP_HOME}
+
 EXPOSE $PORT
 
-CMD trap exit TERM; $APP_HOME/bin/$APP_NAME foreground & wait
+CMD ["/sbin/dinit", "-r", "/etc/rc.local"]
