@@ -25,8 +25,7 @@ config :logger, :console,
 config :basic_auth, webhook: [
   username: {:system, "WEBHOOK_USERNAME"},
   password: {:system, "WEBHOOK_PASSWORD"},
-  realm:    "webhook",
-  proxy_url: System.get_env("WEBHOOK_PROXY_URL") || IO.puts("[warn] WEBHOOK_PROXY_URL environmental variable required")
+  realm:    "webhook"
 ]
 
 config :basic_auth, webhook_test: [

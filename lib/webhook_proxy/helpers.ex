@@ -1,7 +1,7 @@
 defmodule WebhookProxy.Helpers do
   require Logger
 
-  def proxy_url, do: Application.get_env(:basic_auth, :webhook) |> Keyword.get(:proxy_url)
+  def proxy_url, do: System.get_env("WEBHOOK_PROXY_URL")
 
   def post_to_proxy_url(repository_url) do
     Logger.debug(["Proxying to: ", inspect(proxy_url)])
