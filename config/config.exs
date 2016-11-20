@@ -8,8 +8,8 @@ use Mix.Config
 # Configures the endpoint
 config :webhook_proxy, WebhookProxy.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "jtgta3HEuPmLxQ8lCvigEC1l6rhOfMp6txpLOyEQpSnQqkgDj+J0nJJYjm09Ue3w"
-  # render_errors: [view: WebhookProxy.ErrorView, accepts: ~w(html json)],
+  secret_key_base: "jtgta3HEuPmLxQ8lCvigEC1l6rhOfMp6txpLOyEQpSnQqkgDj+J0nJJYjm09Ue3w",
+  render_errors: [view: WebhookProxy.ErrorView, accepts: ~w(html json)]
   # pubsub: [name: WebhookProxy.PubSub,
   #         adapter: Phoenix.PubSub.PG2]
 
