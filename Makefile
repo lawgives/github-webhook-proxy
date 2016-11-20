@@ -1,7 +1,7 @@
 # Makefile for creating container file
 # Override these with environmental variables
 BRANCH?=master
-VERSION?=0.1.0
+VERSION?=`cat VERSION`
 
 ### Do not override below
 
@@ -18,7 +18,8 @@ go_bin=$(go_static_builder) go
 all: container
 
 container: deps/bin/dinit
-	docker build --tag=$(user)/$(app):$(version) .
+	echo "Building release: ${VERSION}"
+	# docker build --tag=$(user)/$(app):$(version) .
 
 push:
 	docker push $(user)/$(app):$(version)

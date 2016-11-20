@@ -13,8 +13,11 @@ use Mix.Config
 # which you typically run after static files are built.
 config :webhook_proxy, WebhookProxy.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/manifest.json"
+  url: [host: "localhost", port: 4000],
+  server: true,
+  cache_static_manifest: "priv/static/manifest.json",
+  root: ".",
+  version: Mix.Project.config[:version]
 
 # Do not print debug messages in production
 config :logger, level: :info
