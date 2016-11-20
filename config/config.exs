@@ -8,10 +8,10 @@ use Mix.Config
 # Configures the endpoint
 config :webhook_proxy, WebhookProxy.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "jtgta3HEuPmLxQ8lCvigEC1l6rhOfMp6txpLOyEQpSnQqkgDj+J0nJJYjm09Ue3w",
-  render_errors: [view: WebhookProxy.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: WebhookProxy.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  secret_key_base: "jtgta3HEuPmLxQ8lCvigEC1l6rhOfMp6txpLOyEQpSnQqkgDj+J0nJJYjm09Ue3w"
+  # render_errors: [view: WebhookProxy.ErrorView, accepts: ~w(html json)],
+  # pubsub: [name: WebhookProxy.PubSub,
+  #         adapter: Phoenix.PubSub.PG2]
 
 config :webhook_proxy, proxy_url: System.get_env("WEBHOOK_PROXY_URL") || IO.puts("[warn] WEBHOOK_PROXY_URL environmental variable required")
 
