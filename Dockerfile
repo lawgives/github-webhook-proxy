@@ -8,9 +8,6 @@ ENV APP_HOME /home/app/${APP_NAME}
 # Add dinit https://github.com/miekg/dinit (Compiled via Makefile)
 ADD _build/docker-deps/bin/dinit /sbin/dinit
 
-# su-exec
-RUN apk --no-cache add su-exec
-
 ADD docker/etc/rc.local /etc/rc.local
 
 RUN mkdir -p $APP_HOME
@@ -27,7 +24,7 @@ ADD rel/$APP_NAME/releases/$APP_VERSION/start.boot        $APP_HOME/releases/$AP
 ADD rel/$APP_NAME/releases/$APP_VERSION/sys.config        $APP_HOME/releases/$APP_VERSION/sys.config
 ADD rel/$APP_NAME/releases/$APP_VERSION/vm.args           $APP_HOME/releases/$APP_VERSION/vm.args
 
-RUN chown -R app ${APP_HOME}
+RUN chown -R app:app ${APP_HOME}
 
 EXPOSE $PORT
 
